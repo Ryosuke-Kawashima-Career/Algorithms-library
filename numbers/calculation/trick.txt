@@ -1,0 +1,6 @@
+1. xor
+xorは同じ数の演算で0になる
+Ex. a ^ a == 0, Ex. a ^ a ^ b == b
+n ^ n+1 == 1
+2. abs parity
+abs(x - y) % 2 == x ^ y == (x + y) % 2
