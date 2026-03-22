@@ -36,7 +36,7 @@ impl Matrix {
     }
 
     fn pow(&self, mut k: usize) -> Matrix {
-        // For (min, +) semiring
+        // For (min, +) semi-ring
         // Identity matrix I has I_ii = 0 and I_ij = INF (i != j)
         // because A * I = A means min(A_ik + I_kj) = A_ij.
         // If I_jj = 0, then A_ij + 0 = A_ij.
