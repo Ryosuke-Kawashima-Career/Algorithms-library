@@ -1,20 +1,21 @@
-use proconio::input;
 use proconio::derive_readable;
+use proconio::input;
 use std::time::{Duration, Instant};
 // 鉄則A46
 #[derive_readable]
 #[derive(Debug, Copy, Clone)]
 struct Point {
-    x: f64, y: f64
+    x: f64,
+    y: f64,
 }
 impl Point {
     fn new(pos_x: f64, pos_y: f64) -> Self {
-        Self{x: pos_x, y: pos_y}
+        Self { x: pos_x, y: pos_y }
     }
 }
 // 2-opt法: 区間の移動順序を反転させる
 fn main() {
-    input!{n: usize, xy: [Point; n]}
+    input! {n: usize, xy: [Point; n]}
     // 開始時間と制限時間
     let start_time = Instant::now();
     let time_limit = Duration::from_millis(990);
@@ -37,7 +38,7 @@ fn main() {
             min_dist = dist;
             nearest_v = next_v;
         }
-        
+
         // if only 0 remains
         if nearest_v == n {
             nearest_v = 0;
@@ -55,7 +56,7 @@ fn main() {
         let mut idx_r: usize = range(xor(), 1, n);
         if idx_l > idx_r {
             std::mem::swap(&mut idx_l, &mut idx_r);
-        } 
+        }
         let mut new_path = path.clone();
         // l..=rを反転させる
         new_path[idx_l..=idx_r].reverse();
@@ -67,7 +68,7 @@ fn main() {
     }
 
     for &v in path.iter() {
-        println!("{}", v+1);
+        println!("{}", v + 1);
     }
 }
 
@@ -115,17 +116,21 @@ fn calc_total(path: &Vec<usize>, xy: &Vec<Point>) -> f64 {
     let mut total_dist: f64 = 0.0;
     let n: usize = xy.len();
     for i in 0..n {
-        total_dist += calc_dist(path[i], path[i+1], xy);
+        total_dist += calc_dist(path[i], path[i + 1], xy);
     }
     total_dist
 }
 
 #[allow(dead_code)]
 fn calc_diff(i: usize, j: usize, xy: &Vec<Point>, path: &Vec<usize>) -> f64 {
-    let before_dist: f64 = calc_dist(path[i-1], path[i], xy) + calc_dist(path[i], path[i+1], xy) 
-    + calc_dist(path[j-1], path[j], xy) + calc_dist(path[j], path[j+1], xy);
-    let after_dist: f64 = calc_dist(path[i-1], path[j], xy) + calc_dist(path[j], path[i+1], xy) 
-    + calc_dist(path[j-1], path[i], xy) + calc_dist(path[i], path[j+1], xy);
+    let before_dist: f64 = calc_dist(path[i - 1], path[i], xy)
+        + calc_dist(path[i], path[i + 1], xy)
+        + calc_dist(path[j - 1], path[j], xy)
+        + calc_dist(path[j], path[j + 1], xy);
+    let after_dist: f64 = calc_dist(path[i - 1], path[j], xy)
+        + calc_dist(path[j], path[i + 1], xy)
+        + calc_dist(path[j - 1], path[i], xy)
+        + calc_dist(path[i], path[j + 1], xy);
     after_dist - before_dist
 }
 
@@ -137,7 +142,7 @@ fn range(rng_num: u32, min_num: usize, max_num: usize) -> usize {
 
 #[allow(dead_code)]
 fn xorshift() -> Box<dyn FnMut() -> u32> {
-    let mut y = 2463534242 ;
+    let mut y = 2463534242;
     Box::new(move || {
         y = y ^ (y << 13);
         y = y ^ (y >> 17);
