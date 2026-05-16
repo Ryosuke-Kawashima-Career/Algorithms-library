@@ -37,3 +37,25 @@ fn power(m: usize, n: usize) -> usize {
 fn mod_inverse(n: usize, m: usize) -> usize {
     power(n, m - 2)
 }
+
+fn comb_functions(max_n: usize) {
+    let mut fact = vec![1u64; max_n + 1];
+    let mut inv = vec![1u64; max_n + 1];
+
+    for i in 1..=max_n {
+        fact[i] = (fact[i - 1] * i as u64) % MOD;
+    }
+
+    inv[max_n] = power(fact[max_n], MOD - 2);
+    for i in (1..max_n).rev() {
+        inv[i] = (inv[i + 1] * (i + 1) as u64) % MOD;
+    }
+    let ncr = |n: usize, r: usize| -> u64 {
+        if r > n {
+            return 0;
+        }
+        let num = fact[n];
+        let den = (inv[r] * inv[n - r]) % MOD;
+        (num * den) % MOD
+    };
+}
