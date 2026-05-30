@@ -60,6 +60,18 @@ fn main() {
         println!("-1");
         return;
     }
-
-    println!("{}", ans);
+    {   // Binary search and Update
+        // 1. Find the key first. We use `map(|(&k, _)| k)` to copy the key out 
+        // and immediately release the immutable borrow on `map`.
+        let target_key = map.range(..=2 * target).last().map(|(&k, _)| k);
+        
+        // 2. Mutate the map safely now that the previous borrow is gone.
+        if let Some(key) = target_key {
+            let val = map.get_mut(&key).unwrap();
+            *val -= 1;
+            if *val == 0 {
+                map.remove(&key);
+            }
+        }
+    }
 }
