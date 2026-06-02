@@ -3,7 +3,7 @@ struct BinaryIndexedTree {
     // the range is [l r] not [l r)
     data: Vec<i64>,
 }
-
+// Length of each data[i] covers is its LSB!!! (End index is inclusive i.)
 impl BinaryIndexedTree {
     // the position of LSB (least significant bit) representing the size of the range
     #[inline]
