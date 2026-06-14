@@ -6,6 +6,18 @@ fn is_upper(c: char) -> bool {
     let dif_from_a: u8 = (c as u8) - ('a' as u8);
     return dif_from_a >= 26;
 }
+fn is_digit(letter: char) -> bool {
+    match letter {
+        '0'..='9' => true,
+        _ => false,
+    }
+}
+fn is_letter(letter: char) -> bool {
+    match letter {
+        'a'..='z' | 'A'..='Z' => true,
+        _ => false,
+    }
+}
 
 fn main() {
     words.sort_by(|a, b| a.to_lowercase().cmp(&b.to_lowercase()));
@@ -20,11 +32,9 @@ fn main() {
     words.sort();
 
     // char
-    if letter.is_lowercase() {
-    }
+    if letter.is_lowercase() {}
     // char -> num ('0' - 48)
-    if (chars[i] as usize - '0' as usize) == num {
-    }
+    if (chars[i] as usize - '0' as usize) == num {}
     // char -> string
     let letter = string.to_string();
     // u32 -> char
