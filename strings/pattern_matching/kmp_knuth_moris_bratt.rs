@@ -5,10 +5,10 @@ use proconio::input;
 // A.Knuth-Morris-Pratt (KMP): KMP relies on a prefix table (or partial match table) to avoid redundant comparisons. It’s particularly efficient for repetitive patterns in the search string.
 // LCP(Longest Common Prefix)
 fn main() {
-    input!{t: usize, cases: [String; 2*t]}
+    input! {t: usize, cases: [String; 2*t]}
     for case in 0..t {
-        let a: String = cases[2*case].clone();
-        let b: Vec<char> = cases[2*case+1].chars().collect();
+        let a: String = cases[2 * case].clone();
+        let b: Vec<char> = cases[2 * case + 1].chars().collect();
         // Aを2回繰り返して、その中からBを探す
         // 見つかった位置がシフト回数になる
         let a_double: Vec<char> = format!("{0}{0}", a).chars().collect();
@@ -18,6 +18,78 @@ fn main() {
         } else {
             println!("-1");
         }
+    }
+}
+
+mod kmp {
+    // cleaner implementation of KMP
+    fn get_lps(pattern: &Vec<char>) -> Vec<usize> {
+        /* Return the longest proper prefix (the prefixes match the suffixes)
+        Args:
+            pattern(&Vec<char>): the patter to match the target with.
+        Returns:
+            Vec<usize>: the length of the longest proper prefix that matches the suffixes.
+        */
+        let m: usize = pattern.len();
+        let mut lps: Vec<usize> = vec![0; m];
+        let mut index: usize = 1;
+        // length of previous longest proper prefix suffix
+        let mut length: usize = 0;
+        while index < m {
+            if pattern[index] == pattern[length] {
+                length += 1;
+                lps[index] = length;
+                index += 1;
+            } else {
+                if length != 0 {
+                    length = lps[length - 1];
+                } else {
+                    lps[index] = 0;
+                    index += 1;
+                }
+            }
+        }
+        return lps;
+    }
+
+    fn kmp_search(text: &Vec<char>, pattern: &Vec<char>, lps: &Vec<usize>) -> Vec<usize> {
+        /* Returns the matched index by Knuth Moris Algorithm
+        Args:
+            text(&Vec<char>): the target text.
+            pattern(&Vec<char>): the pattern to match the target with.
+            lps(&Vec<usize>): the length of the longest proper prefix that matches the suffixes.
+        Returns:
+            Vec<usize>: the matched index.
+        */
+        let mut matched: Vec<usize> = Vec::new();
+        let mut text_index: usize = 0;
+        let mut pattern_index: usize = 0;
+        let n: usize = text.len();
+        let m: usize = pattern.len();
+
+        while text_index < n {
+            while pattern_index < m && text_index < n {
+                if text[text_index] == pattern[pattern_index] {
+                    text_index += 1;
+                    pattern_index += 1;
+                } else {
+                    if pattern_index != 0 {
+                        // Return back the previous common length
+                        pattern_index = lps[pattern_index - 1];
+                    } else {
+                        // start from scratch
+                        text_index += 1;
+                    }
+                }
+            }
+            if pattern_index == m {
+                let first_index: usize = text_index - pattern_index;
+                matched.push(first_index);
+            }
+            text_index += 1;
+            pattern_index = 0;
+        }
+        return matched;
     }
 }
 
@@ -66,11 +138,11 @@ fn kmp_search(text: &[char], pattern: &[char]) -> Vec<usize> {
         if j == m {
             // when the pattern is found
             occurrences.push(i - j);
-            j = longest_prefix_suffix[j-1];
+            j = longest_prefix_suffix[j - 1];
         } else if i < n && text[i] != pattern[j] {
             if j > 0 {
                 // patternの中でindex=jから前のindexに戻る
-                j = longest_prefix_suffix[j-1];
+                j = longest_prefix_suffix[j - 1];
             } else {
                 i += 1;
             }
