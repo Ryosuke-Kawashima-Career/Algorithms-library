@@ -9,9 +9,7 @@ impl DisjointSetUnion {
     fn new(n: usize) -> Self {
         let parent: Vec<usize> = (0..n).collect();
         let size: Vec<usize> = vec![1; n];
-        Self {
-            parent, size
-        }
+        Self { parent, size }
     }
     fn root(&mut self, node: usize) -> usize {
         if self.parent[node] == node {
@@ -31,8 +29,14 @@ impl DisjointSetUnion {
             return false;
         }
         match self.size[root_a].cmp(&self.size[root_b]) {
-            std::cmp::Ordering::Less => self.parent[root_a] = root_b,
-            std::cmp::Ordering::Greater => self.parent[root_b] = root_a,
+            std::cmp::Ordering::Less => {
+                self.parent[root_a] = root_b;
+                self.size[root_b] += self.size[root_a];
+            }
+            std::cmp::Ordering::Greater => {
+                self.parent[root_b] = root_a;
+                self.size[root_a] += self.size[root_b];
+            }
             std::cmp::Ordering::Equal => {
                 self.parent[root_b] = root_a;
                 self.size[root_a] += self.size[root_b];
@@ -42,7 +46,7 @@ impl DisjointSetUnion {
     }
 }
 fn main() {
-    input!{n: usize, m: usize, ab: [(Usize1, Usize1); m]}
+    input! {n: usize, m: usize, ab: [(Usize1, Usize1); m]}
     let mut ans: usize = 0;
     for unused_edge_idx in 0..m {
         let mut dsu = DisjointSetUnion::new(n);
