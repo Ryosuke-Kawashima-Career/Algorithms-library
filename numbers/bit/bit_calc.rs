@@ -12,6 +12,11 @@ fn main() {
     // i,j,k桁のbitを反転させる。
     // switchのon-offの反転をxor(1+0=1, 1+1=0, 0+0=0: 繰り上がりが消える足し算)で表現する。
     let next_bit: usize = bit ^ (1 << i) ^ (1 << j) ^ (1 << k);
+
+    let mut nim_sum: usize = 0;
+    nim_sum ^= 3;
+    // Xor the same value twice = Reset!!!
+    nim_sum ^= 3 ^ 5;
 }
 
 fn popcount(mut n: usize) -> usize {
