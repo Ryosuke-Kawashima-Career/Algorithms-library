@@ -18,6 +18,7 @@ library/
 │   ├── cornercase_fix.md    # Checklist for edge cases & boundary conditions
 │   ├── cp-tricks.md         # General competitive programming tips & tricks
 │   ├── problem_solving.md   # Step-by-step problem solving methodology
+│   ├── solution_strategy.md # Comprehensive problem-solving techniques & strategies
 │   └── tricks.rs            # Rust language-specific implementation tricks
 ├── graph/                   # Graph & tree algorithms (Dijkstra, BFS/DFS, MST, SCC, LCA, etc.)
 ├── greedy/                  # Greedy algorithms (Priority queue, Sweepline, Lexicographical optimization)
@@ -107,6 +108,7 @@ Collection of competitive programming documentation, checklists, and language-sp
 - **[cornercase_fix.md]**: Edge cases & boundary condition checklist.
 - **[cp-tricks.md]**: Competitive programming tips, constants, and Rust debugging techniques.
 - **[problem_solving.md]**: Step-by-step problem solving approach checklist.
+- **[solution_strategy.md]**: Comprehensive guide on problem reformulation, constraints, operational paradigms, game theory, and math techniques.
 - **[tricks.rs]**: Useful Rust language-specific snippets and tricks.
 
 ### 7. `graph/` - Graph & Tree Algorithms
