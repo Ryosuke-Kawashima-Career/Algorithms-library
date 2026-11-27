@@ -1,14 +1,20 @@
 use proconio::input;
 // 典型66
+// Typical90 Problem 066: Various Arrays
+// Find the expectation of inverses
+// Key insight: Linearity of Expectation
+// E[inversions] = sum_{i < j} P(a_i > a_j)
 // 期待値の線形性を利用する
 // 和の期待値は期待値の和
+// the sum of expectations is the total expectations
+// the total expectations is the sum of probabilities
 fn main() {
-    input!{n: usize, lr: [(usize, usize); n]}
+    input! {n: usize, lr: [(usize, usize); n]}
     let mut expect: f64 = 0.0;
 
     // i,j間の期待値を全体の期待値に足す。
     for i in 0..n {
-        for j in i+1..n {
+        for j in i + 1..n {
             let all_case: usize = (lr[i].1 - lr[i].0 + 1) * (lr[j].1 - lr[j].0 + 1);
             let mut inv_case: usize = 0;
 
